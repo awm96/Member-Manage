@@ -1,0 +1,58 @@
+spring:
+  devtools:
+    restart:
+      enabled: true
+  resources:
+    chain:
+      cache: false
+  freemarker:
+    cache: false
+    charset: UTF-8
+    content-type: text/html
+    request-context-attribute: req
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/member-manage?useUnicode=true&amp;characterEncoding=UTF-8
+    username: root
+    password: root
+    hikari:
+      allow-pool-suspension: true
+      auto-commit: false
+      maximum-pool-size: 5
+      minimum-idle: 2
+      connection-test-query: select 1
+  mvc:
+    favicon:
+      enabled: false
+  application:
+    name: member-manage
+  output:
+    ansi:
+      enabled: DETECT
+  jmx:
+    enabled: false
+
+server:
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+  display-name: member-manage
+  ssl:
+    enabled: false
+  port: 80
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+    default-fetch-size: 100
+    default-statement-timeout: 30
+    default-executor-type: simple
+    lazy-loading-enabled: false
+  type-aliases-package: cn.lgq.mm.model
+  mapper-locations: classpath:mapper/*.xm
+
+mapper:
+  identity: mysql
+  not-empty: false
+#  mappers: cn.lgq.mm.dao.TodoDao
