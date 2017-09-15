@@ -17,7 +17,7 @@ public class LoginController extends AbstractController {
     /** 跳转至member登陆页面 */
     @RequestMapping(value = "/member", method = RequestMethod.GET)
     public String forwardToMember() {
-        log.info("asdf");
+        log.info("gggg");
         return "login_member";
     }
 
