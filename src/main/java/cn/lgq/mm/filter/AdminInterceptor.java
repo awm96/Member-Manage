@@ -32,7 +32,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         Admin user = (Admin) session.getAttribute(Constants.ADMIN_SESSION_KEY);
         if (user == null) {
             request.setAttribute(Constants.ALERT_MSG_REQUEST_KEY, "会话超时，请重新登陆!");
-            request.getRequestDispatcher("/login/admin").forward(request, response);
+            request.getRequestDispatcher("/login/member").forward(request, response);
             return false;
         }
 

@@ -18,7 +18,7 @@ public class LoginController extends AbstractController {
     @RequestMapping(value = "/member", method = RequestMethod.GET)
     public String forwardToMember() {
         log.info("gggg");
-        return "login_member";
+        return "/login/login_member";
     }
 
     /**
@@ -28,6 +28,6 @@ public class LoginController extends AbstractController {
      */
     @RequestMapping(value = "/member", method = RequestMethod.POST)
     public String memberLogin(@RequestParam String idCardNo, @RequestParam String password) {
-        return "member_dashboard";
+        return "/main/member_dashboard";
     }
 }

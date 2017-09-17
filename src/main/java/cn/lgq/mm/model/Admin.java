@@ -15,8 +15,8 @@ public class Admin {
     private String password;
     private Integer type;
     private Timestamp createTime;
-    private Long creator;
+    private Long creatorId;
     private Timestamp updateTime;
-    private Long updater;
+    private Long updaterId;
 
 }

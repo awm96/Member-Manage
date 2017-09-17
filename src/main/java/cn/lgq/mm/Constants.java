@@ -24,4 +24,6 @@ public class Constants {
     public static final Integer MEMBER_LEVEL_1 = 0;
     public static final Integer MEMBER_LEVEL_2 = 1;
     public static final Integer MEMBER_LEVEL_3 = 2;
+    public static final Integer MEMBER_SEX_MAN = 0;
+    public static final Integer MEMBER_SEX_WOMAN = 1;
 }
