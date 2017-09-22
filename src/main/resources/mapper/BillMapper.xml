@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lgq.mm.dao.BillMapper">
+
+  <sql id="columns">
+        id, master_id, member_id, trans_type, amount, create_time, creator_id
+    </sql>
+
+  <select id="getBill" resultType="Bill">
+    select
+    <include refid="columns"/>
+    from bill where id = #{id}
+  </select>
+
+  <select id="findBills" resultType="Bill">
+    select
+    <include refid="columns"/>
+    from bill
+    <where>
+      <if test="masterId != null">master_id = #{masterId}</if>
+      <if test="memberId != null">member_id = #{memberId}</if>
+      <if test="createTimeStart != null">createTimeStart >= #{createTimeStart}</if>
+      <if test="createTimeEnd != null">createTimeEnd &lt;= #{createTimeEnd}</if>
+    </where>
+    <if test="offset != null and limit != null">
+      order by id desc limit #{offset}, #{limit}
+    </if>
+  </select>
+
+  <select id="countBills" resultType="int">
+    select count(*) from bill
+    <where>
+      <if test="masterId != null">master_id = #{masterId}</if>
+      <if test="memberId != null">member_id = #{memberId}</if>
+      <if test="createTimeStart != null">createTimeStart >= #{createTimeStart}</if>
+      <if test="createTimeEnd != null">createTimeEnd &lt;= #{createTimeEnd}</if>
+    </where>
+  </select>
+
+  <insert id="addBill" useGeneratedKeys="true" keyProperty="id">
+    insert into bill(<include refid="columns"/>) values (
+    default,
+    <choose>
+      <when test="masterId == null">0</when>
+      <otherwise>#{masterId}</otherwise>
+    </choose>
+    ,
+    #{memberId}, #{transType}, #{amount}, now(), #{creatorId}
+    );
+    <if test="masterId == null">
+      update bill set master_id=@@IDENTITY where id=@@IDENTITY;
+    </if>
+  </insert>
+
+</mapper>

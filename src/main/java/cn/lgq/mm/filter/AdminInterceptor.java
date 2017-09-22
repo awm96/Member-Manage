@@ -3,6 +3,7 @@ package cn.lgq.mm.filter;
 import cn.lgq.mm.Constants;
 import cn.lgq.mm.model.Admin;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +20,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
      */
     private String[] superAdminPaths;
 
-    public AdminInterceptor() {}
+    public AdminInterceptor() {
+    }
 
     public AdminInterceptor(String[] superAdminPaths) {
         this.superAdminPaths = superAdminPaths;
@@ -31,8 +33,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         HttpSession session = request.getSession();
         Admin user = (Admin) session.getAttribute(Constants.ADMIN_SESSION_KEY);
         if (user == null) {
-            request.setAttribute(Constants.ALERT_MSG_REQUEST_KEY, "会话超时，请重新登陆!");
-            request.getRequestDispatcher("/login/member").forward(request, response);
+            request.setAttribute(Constants.ERROR_MSG_REQUEST_KEY, "会话超时，请重新登陆!");
+            request.getRequestDispatcher("/admin/login").forward(request, response);
             return false;
         }
 
@@ -40,7 +42,9 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             String requestUri = request.getRequestURI().replaceFirst(request.getContextPath(), "");
             for (String path : superAdminPaths) {
                 if (requestUri.startsWith(path) && !Constants.ADMIN_SUPER.equals(user.getType())) {
-                    request.getRequestDispatcher("/error/401").forward(request, response);
+                    request.setAttribute(Constants.STATUS_CODE_REQUEST_KEY, HttpStatus.FORBIDDEN);
+                    request.setAttribute(Constants.ERROR_MSG_REQUEST_KEY, "您没有权限访问该URL");
+                    request.getRequestDispatcher("/error").forward(request, response);
                     return false;
                 }
             }

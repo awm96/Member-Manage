@@ -18,6 +18,7 @@ public class SHA1Util {
 
     /**
      * 字符串加密方法
+     *
      * @param strSrc 原字符串
      * @return 加密后字符串
      */
@@ -27,7 +28,8 @@ public class SHA1Util {
 
     /**
      * 字符串加密方法
-     * @param strSrc 原字符串
+     *
+     * @param strSrc  原字符串
      * @param encName 数据摘要算法名称
      * @return 加密后字符串
      */

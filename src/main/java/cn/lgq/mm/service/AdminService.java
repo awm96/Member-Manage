@@ -1,54 +1,52 @@
 package cn.lgq.mm.service;
 
-import cn.lgq.mm.dao.MemberMapper;
-import cn.lgq.mm.model.Member;
+import cn.lgq.mm.dao.AdminMapper;
+import cn.lgq.mm.model.Admin;
 import cn.lgq.mm.vo.Page;
-import java.sql.Timestamp;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * Created by Ligq on 2017/9/15.
  */
 @Service
-public class MemberService {
+public class AdminService {
 
     @Autowired
-    private MemberMapper mapper;
+    private AdminMapper mapper;
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public Member getMember(Long id) {
-        return mapper.getMember(id);
+    public Admin getAdmin(Long id) {
+        return mapper.getAdmin(id);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public Member getMemberByIdCardNo(String idCardNo) {
-        return mapper.getMemberByIdCardNo(idCardNo);
+    public Admin getAdminByName(String name) {
+        return mapper.getAdminByName(name);
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public Page<Member> findMembers(String name, String mobile, String idCardNo, int pageNo, int pageSize) {
-        Page<Member> page = new Page<>();
+    public Page<Admin> findAdmins(String name, Integer type, Integer pageNo, Integer pageSize) {
+        Page<Admin> page = new Page<>();
         page.setPageNo(pageNo);
         page.setLimit(pageSize);
-        List<Member> list = mapper.findMembers(name, mobile, idCardNo, page.getOffset(), page.getLimit());
-        int count = mapper.countMembers(name, mobile, idCardNo);
+        List<Admin> list = mapper.findAdmins(name, type, page.getOffset(), page.getLimit());
+        int count = mapper.countAdmins(name, type);
         page.setTotalRows(count);
         page.setResultList(list);
         return page;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void addMember(Member member) {
-        mapper.addMember(member);
+    public void addAdmin(Admin admin) {
+        mapper.addAdmin(admin);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
-    public void updateMember(Member member) {
-        mapper.updateMember(member);
+    public void updateAdmin(Admin admin) {
+        mapper.updateAdmin(admin);
     }
 }

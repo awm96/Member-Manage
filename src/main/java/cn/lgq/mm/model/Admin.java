@@ -16,7 +16,9 @@ public class Admin {
     private Integer type;
     private Timestamp createTime;
     private Long creatorId;
+    private transient String creatorName;
     private Timestamp updateTime;
     private Long updaterId;
+    private transient String updaterName;
 
 }

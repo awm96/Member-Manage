@@ -17,5 +17,6 @@ public class Bill {
     private Integer amount;
     private Timestamp createTime;
     private Long creatorId;
+    private transient String creatorName;
 
 }

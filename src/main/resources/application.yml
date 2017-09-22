@@ -10,6 +10,8 @@ spring:
     charset: UTF-8
     content-type: text/html
     request-context-attribute: req
+    expose-request-attributes: false
+    expose-session-attributes: false
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
@@ -50,7 +52,7 @@ mybatis:
     default-executor-type: simple
     lazy-loading-enabled: false
   type-aliases-package: cn.lgq.mm.model
-  mapper-locations: classpath:mapper/*.xm
+  mapper-locations: classpath:mapper/*.xml
 
 mapper:
   identity: mysql

@@ -14,6 +14,7 @@ public class Member {
     private Long id;
     private String name;
     private String idCardNo;
+    private String mobile;
     private String password;
     private Integer sex;
     private Date birthday;
@@ -24,7 +25,9 @@ public class Member {
     private Timestamp lastTransTime;
     private Timestamp createTime;
     private Long creatorId;
+    private transient String creatorName;
     private Timestamp updateTime;
     private Long updaterId;
+    private transient String updaterName;
 
 }

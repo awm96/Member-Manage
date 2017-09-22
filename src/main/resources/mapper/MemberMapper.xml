@@ -1,18 +1,60 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.lgq.mm.dao.MemberMapper">
 
-    <select id="queryProperties" resultMap="propertyResultmap">
-        select
-        prop.id, prop.name, prop.property
-        from public.property prop
-        where delete_flag='0'
-        <if test="list != null and list.size > 0">
-            AND id IN
-            <foreach collection="list" item="item" open="(" separator="," close=")">
-                #{item}
-            </foreach>
-        </if>
-    </select>
+  <sql id="columns">
+        id, name, id_card_no, mobile, password, sex, birthday, level, stored_amount, consume_amount,
+        integral_amount, last_trans_time, create_time, creator_id, update_time, updater_id
+    </sql>
 
+  <select id="getMember" resultType="Member">
+    select
+    <include refid="columns"/>
+    from member where id = #{id}
+  </select>
+
+  <select id="getMemberByIdCardNo" resultType="Member">
+    select
+    <include refid="columns"/>
+    from member where id_card_no = #{id}
+  </select>
+
+  <select id="findMembers" resultType="Member">
+    select
+    <include refid="columns"/>
+    from member
+    <where>
+      <if test="name != null">name like #{name}</if>
+      <if test="mobile != null">mobile like #{mobile}</if>
+      <if test="idCardNo != null">id_card_no like #{idCardNo}</if>
+    </where>
+    <if test="offset != null and limit != null">
+      order by id desc limit #{offset}, #{limit}
+    </if>
+  </select>
+  
+  <select id="countMembers">
+    select count(*) from member
+    <where>
+      <if test="name != null">name like #{name}</if>
+      <if test="mobile != null">mobile like #{mobile}</if>
+      <if test="idCardNo != null">id_card_no like #{idCardNo}</if>
+    </where>
+  </select>
+
+  <insert id="addMember" useGeneratedKeys="true" keyProperty="id">
+    insert into member(<include refid="columns"/>) values (
+    default, #{name}, #{idCardNo}, #{mobile}, #{password}, #{sex}, #{birthday}, #{level},
+    #{storedAmount}, #{consumeAmount},
+    #{integralAmount}, #{lastTransTime}, now(), #{creatorId}, now(), #{updaterId}
+    )
+  </insert>
+
+  <update id="updateMember">
+      update member set
+         name=#{name}, id_card_no=#{idCardNo}, mobile=#{mobile}, password=#{password}, sex=#{sex},
+         birthday=#{birthday}, level=#{level}, update_time=now(), updater_id=#{updaterId}
+      where id = #{id}
+    </update>
 </mapper>

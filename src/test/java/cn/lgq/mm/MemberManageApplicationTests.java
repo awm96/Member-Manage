@@ -11,8 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Slf4j
 public class MemberManageApplicationTests {
 
-	@Test
-	public void loadContext() {
-		log.info("test");
-	}
+    @Test
+    public void loadContext() {
+        log.info("test");
+    }
 }
