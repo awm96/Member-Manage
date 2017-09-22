@@ -30,6 +30,8 @@
 <link href='${req.contextPath}/charisma/css/animate.min.css' rel='stylesheet'>
 <!-- The fav icon -->
 <link rel="shortcut icon" href="${req.contextPath}/images/favicon.ico">
+<link rel="stylesheet" href="${req.contextPath}/timepicker/css/jquery-ui.css">
+<link rel="stylesheet" href="${req.contextPath}/css/system.css">
 
 <!-- jQuery -->
 <script src="${req.contextPath}/charisma/bower_components/jquery/jquery.min.js"></script>
@@ -77,3 +79,9 @@
 <script src="${req.contextPath}/charisma/js/jquery.history.js"></script>
 <!-- application script for Charisma demo -->
 <script src="${req.contextPath}/charisma/js/charisma.js"></script>
+<!-- datetimepicker -->
+<script src="${req.contextPath}/timepicker/js/jquery-ui.js"></script>
+<script src="${req.contextPath}/timepicker/js/jquery-ui-slide.min.js"></script>
+<script src="${req.contextPath}/timepicker/js/jquery-ui-timepicker-addon.js"></script>
+<!-- system custom js -->
+<script src="${req.contextPath}/js/system.js"></script>

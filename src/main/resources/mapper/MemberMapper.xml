@@ -4,9 +4,9 @@
 <mapper namespace="cn.lgq.mm.dao.MemberMapper">
 
   <sql id="columns">
-        id, name, id_card_no, mobile, password, sex, birthday, level, stored_amount, consume_amount,
-        integral_amount, last_trans_time, create_time, creator_id, update_time, updater_id
-    </sql>
+      id, name, id_card_no, mobile, password, sex, birthday, level, stored_amount, consume_amount,
+      integral_amount, last_trans_time, create_time, creator_id, update_time, updater_id
+  </sql>
 
   <select id="getMember" resultType="Member">
     select
@@ -52,9 +52,9 @@
   </insert>
 
   <update id="updateMember">
-      update member set
-         name=#{name}, id_card_no=#{idCardNo}, mobile=#{mobile}, password=#{password}, sex=#{sex},
-         birthday=#{birthday}, level=#{level}, update_time=now(), updater_id=#{updaterId}
-      where id = #{id}
-    </update>
+    update member set
+       name=#{name}, id_card_no=#{idCardNo}, mobile=#{mobile}, password=#{password}, sex=#{sex},
+       birthday=#{birthday}, level=#{level}, update_time=now(), updater_id=#{updaterId}
+    where id = #{id}
+  </update>
 </mapper>

@@ -21,7 +21,7 @@ ${message}<br><br>
     </div>
   </div>
 </#if>
-  <a href="index.html">返回首页</a>
+  <a href="${req.contextPath}">返回首页</a>
 </div>
 </body>
 </html>

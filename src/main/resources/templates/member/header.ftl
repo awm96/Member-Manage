@@ -34,10 +34,79 @@
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu">
-        <li><a href="${req.contextPath}/member/update">修改个人信息</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#memberModal">修改个人信息</a></li>
         <li class="divider"></li>
         <li><a href="${req.contextPath}/member/logout">退出登陆</a></li>
       </ul>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>会员基本信息</h3>
+      </div>
+      <div class="modal-body">
+        <form id="memberForm" action="${req.contextPath}/member/update" class="form-horizontal" method="post">
+          <div class="form-group">
+            <label for="member_name" class="col-sm-4 control-label">姓名</label>
+            <div class="col-sm-8">
+              <input type="text" name="name" value="${member.name}" class="form-control" id="member_name" placeholder="真实姓名" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">身份证号</label>
+            <div class="col-sm-8">
+              <p class="form-control-static">
+                <span class="label label-default">${member.idCardNo}</span>
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_password" class="col-sm-4 control-label">密码</label>
+            <div class="col-sm-8">
+              <input type="password" name="password" class="form-control" id="member_password" placeholder="登陆密码">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_mobile" class="col-sm-4 control-label">手机号</label>
+            <div class="col-sm-8">
+              <input type="text" name="mobile" value="${member.mobile!}" class="form-control" id="member_mobile" placeholder="手机号" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_sex" class="col-sm-4 control-label">性别</label>
+            <div class="col-sm-8">
+              <select name="sex" id="member_sex" class="form-control">
+                <option ${(member.sex??)?string("","selected")} value="">--</option>
+                <option ${(member.sex?? && member.sex == 0)?string("selected","")} value="0">女</option>
+                <option ${(member.sex?? && member.sex == 1)?string("selected","")} value="1">男</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_birthday" class="col-sm-4 control-label">生日</label>
+            <div class="col-sm-8">
+              <input type="text" name="birthday" value="${member.birthday!}" class="form-control datepicker" id="member_birthday">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-4 control-label">级别</label>
+            <div class="col-sm-8">
+              <p class="form-control-static">
+              <#if member.level == 0>--<#elseif member.level == 1>
+                银牌会员<#elseif member.level == 2>金牌会员<#else>钻石会员</#if>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+        <a href="javascript:$('#memberForm').submit();" class="btn btn-primary">保存</a>
+      </div>
     </div>
   </div>
 </div>

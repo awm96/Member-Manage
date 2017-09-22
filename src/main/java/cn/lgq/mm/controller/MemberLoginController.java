@@ -33,7 +33,7 @@ public class MemberLoginController extends AbstractController {
      * 跳转至member登陆页面
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String forwardToMember() {
+    public String forwardTo() {
         return memberLoginPage;
     }
 
@@ -44,7 +44,7 @@ public class MemberLoginController extends AbstractController {
      * @param password 密码
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView memberLogin(@RequestParam String idCardNo, @RequestParam String password, HttpSession session) {
+    public ModelAndView login(@RequestParam String idCardNo, @RequestParam String password, HttpSession session) {
 
         Member member = service.getMemberByIdCardNo(idCardNo);
         if (member == null || !member.getPassword().equals(SHA1Util.encrypt(password))) {
@@ -55,5 +55,14 @@ public class MemberLoginController extends AbstractController {
             session.setAttribute(Constants.MEMBER_SESSION_KEY, member);
             return new ModelAndView(memberDashboardPage);
         }
+    }
+
+    /**
+     * 处理member登出
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "/";
     }
 }

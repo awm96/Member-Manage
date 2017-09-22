@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Created by Ligq on 2017/9/14.
@@ -17,6 +18,7 @@ public class Member {
     private String mobile;
     private String password;
     private Integer sex;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthday;
     private Integer level;
     private Integer storedAmount;

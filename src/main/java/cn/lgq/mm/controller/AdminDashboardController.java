@@ -7,6 +7,7 @@ import cn.lgq.mm.service.BillService;
 import cn.lgq.mm.service.MemberService;
 import cn.lgq.mm.util.SHA1Util;
 import cn.lgq.mm.vo.Page;
+import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import javax.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,10 +23,10 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Slf4j
 @Controller
-@RequestMapping("/member")
-public class MemberDashboardController extends AbstractController {
+@RequestMapping("/admin")
+public class AdminDashboardController extends AbstractController {
 
-    private final String memberMainPage = "/member/dashboard";
+    private final String mainPage = "/admin/dashboard";
 
     @Autowired
     private MemberService memberService;
@@ -42,7 +42,7 @@ public class MemberDashboardController extends AbstractController {
         Member member = (Member) session.getAttribute(Constants.MEMBER_SESSION_KEY);
         model.addAttribute("member", member);
         Page<Bill> page = billService.findBills(null, member.getId(), null, null, pageNo, pageSize);
-        ModelAndView mav = new ModelAndView(memberMainPage);
+        ModelAndView mav = new ModelAndView(mainPage);
         mav.addObject("page", page);
         return mav;
     }
@@ -62,7 +62,7 @@ public class MemberDashboardController extends AbstractController {
         old.setBirthday(member.getBirthday());
         old.setUpdaterId(old.getId() * -1);
         memberService.updateMember(old);
-        return "redirect:" + memberMainPage;
+        return "redirect:" + mainPage;
     }
 
 }
