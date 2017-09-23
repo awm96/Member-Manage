@@ -24,9 +24,9 @@ CREATE TABLE `admin` (
   `name` varchar(30) DEFAULT NULL,
   `password` varchar(50) DEFAULT NULL,
   `type` tinyint(4) DEFAULT NULL COMMENT '0:普通管理员，1:超级管理员',
-  `create_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `create_time` timestamp NULL DEFAULT NULL,
   `creator_id` bigint(20) DEFAULT NULL,
-  `update_time` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NULL DEFAULT NULL,
   `updater_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_admin_name` (`name`)
