@@ -53,8 +53,8 @@
 
   <update id="updateMember">
     update member set
-       name=#{name}, id_card_no=#{idCardNo}, mobile=#{mobile}, password=#{password}, sex=#{sex},
-       birthday=#{birthday}, level=#{level}, update_time=now(), updater_id=#{updaterId}
+       name=#{name}, id_card_no=#{idCardNo}, mobile=#{mobile}, <if test="password != null">password=#{password},</if>
+       sex=#{sex}, birthday=#{birthday}, level=#{level}, update_time=now(), updater_id=#{updaterId}
     where id = #{id}
   </update>
 </mapper>

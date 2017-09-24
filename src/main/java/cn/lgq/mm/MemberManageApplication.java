@@ -43,10 +43,13 @@ public class MemberManageApplication extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MemberInterceptor()).addPathPatterns("/member/**")
                 .excludePathPatterns("/member/login");
-        registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login");
+        registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/manage/**")
+                .excludePathPatterns("/manage/login");
     }
 
+    /**
+     * 注册首页view
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("/index");
@@ -54,7 +57,7 @@ public class MemberManageApplication extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 添加自定义静态类支持
+     * 添加Freemarker自定义静态类支持
      *
      * @param viewResolver spring autoconfig自动生成的viewResolver
      * @return 原viewResolver

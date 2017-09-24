@@ -4,7 +4,6 @@ import cn.lgq.mm.Constants;
 import cn.lgq.mm.model.Admin;
 import cn.lgq.mm.service.AdminService;
 import cn.lgq.mm.util.SHA1Util;
-import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,15 +12,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * Created by Ligq on 2017/9/15.
  */
 @Slf4j
 @Controller
-@RequestMapping("/manage")
-public class AdminLoginController extends AbstractController {
+@RequestMapping("/manage/admin")
+public class AdminManageController extends AbstractController {
 
-    private final String loginPage = "/manage/login";
+    private final String loginPage = "/manage/list";
     private final String dashboardPage = "redirect:/manage/dashboard";
 
     @Autowired

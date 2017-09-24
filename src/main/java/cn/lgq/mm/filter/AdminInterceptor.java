@@ -34,7 +34,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         Admin user = (Admin) session.getAttribute(Constants.ADMIN_SESSION_KEY);
         if (user == null) {
             request.setAttribute(Constants.ERROR_MSG_REQUEST_KEY, "会话超时，请重新登陆!");
-            request.getRequestDispatcher("/admin/login").forward(request, response);
+            request.getRequestDispatcher("/manage/login").forward(request, response);
             return false;
         }
 
@@ -43,7 +43,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
             for (String path : superAdminPaths) {
                 if (requestUri.startsWith(path) && !Constants.ADMIN_SUPER.equals(user.getType())) {
                     request.setAttribute(Constants.STATUS_CODE_REQUEST_KEY, HttpStatus.FORBIDDEN);
-                    request.setAttribute(Constants.ERROR_MSG_REQUEST_KEY, "您没有权限访问该URL");
+                    request.setAttribute(Constants.ERROR_MSG_REQUEST_KEY, "您没有权限访问该地址");
                     request.getRequestDispatcher("/error").forward(request, response);
                     return false;
                 }

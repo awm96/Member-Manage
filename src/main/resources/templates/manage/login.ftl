@@ -27,7 +27,7 @@
           请输入管理员名称、密码登陆
         </div>
       </#if>
-        <form class="form-horizontal" action="${req.contextPath}/admin/login" method="post">
+        <form class="form-horizontal" action="${req.contextPath}/manage/login" method="post">
           <fieldset>
             <div class="input-group input-group-lg">
               <span class="input-group-addon"><i class="glyphicon glyphicon-user blue"></i></span>

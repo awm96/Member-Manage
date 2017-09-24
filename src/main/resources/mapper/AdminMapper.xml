@@ -52,8 +52,8 @@
   </insert>
 
   <update id="updateAdmin">
-      update admin set
-         name=#{name}, password=#{password}, type=#{type}, update_time=now(), updater_id=#{updaterId}
-      where id = #{id}
-    </update>
+    update admin set
+       name=#{name}, <if test="password != null">password=#{password},</if> type=#{type}, update_time=now(), updater_id=#{updaterId}
+    where id = #{id}
+  </update>
 </mapper>
