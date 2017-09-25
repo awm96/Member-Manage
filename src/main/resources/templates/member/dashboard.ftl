@@ -172,7 +172,7 @@
               <td>${item.creatorName}</td>
             </tr>
             <#else>
-            <tr><td colspan="5">还没有任何记录...<i class="glyphicon glyphicon-question-sign red"></i></td></tr>
+            <tr><td colspan="5">还没有任何记录...</td></tr>
             </#list>
             </tbody>
           </table>

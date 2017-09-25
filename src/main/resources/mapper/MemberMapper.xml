@@ -25,21 +25,21 @@
     <include refid="columns"/>
     from member
     <where>
-      <if test="name != null">name like #{name}</if>
-      <if test="mobile != null">mobile like #{mobile}</if>
-      <if test="idCardNo != null">id_card_no like #{idCardNo}</if>
+      <if test="name != null and name != ''">name like '%${name}%'</if>
+      <if test="mobile != null and mobile != ''">and mobile like '%${mobile}%'</if>
+      <if test="idCardNo != null and idCardNo != ''">and id_card_no like '%${idCardNo}%'</if>
     </where>
     <if test="offset != null and limit != null">
       order by id desc limit #{offset}, #{limit}
     </if>
   </select>
   
-  <select id="countMembers">
+  <select id="countMembers" resultType="int">
     select count(*) from member
     <where>
-      <if test="name != null">name like #{name}</if>
-      <if test="mobile != null">mobile like #{mobile}</if>
-      <if test="idCardNo != null">id_card_no like #{idCardNo}</if>
+      <if test="name != null and name != ''">name like '%${name}%'</if>
+      <if test="mobile != null and mobile != ''">and mobile like '%${mobile}%'</if>
+      <if test="idCardNo != null and idCardNo != ''">and id_card_no like '%${idCardNo}%'</if>
     </where>
   </select>
 

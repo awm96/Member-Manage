@@ -29,8 +29,8 @@
     <include refid="columns"/>
     from admin
     <where>
-      <if test="name != null">name like #{name}</if>
-      <if test="type != null">type = #{type}</if>
+      <if test="name != null and name != ''">name like '%${name}%'</if>
+      <if test="type != null">and type = #{type}</if>
     </where>
     <if test="offset != null and limit != null">
       order by id desc limit #{offset}, #{limit}
@@ -40,8 +40,8 @@
   <select id="countAdmins" resultType="int">
     select count(*) from admin
     <where>
-      <if test="name != null">name like #{name}</if>
-      <if test="type != null">type = #{type}</if>
+      <if test="name != null and name != ''">name like '%${name}%'</if>
+      <if test="type != null">and type = #{type}</if>
     </where>
   </select>
 
