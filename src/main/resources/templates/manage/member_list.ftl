@@ -2,6 +2,30 @@
 <html lang="cn">
 <head>
 <#include "/common.ftl">
+<script type="text/javascript">
+    function showMemberDialog(memberId) {
+      if (memberId) {
+        var json = $("#member_" + memberId).attr("json");
+        json = JSON.parse(json);
+        $("#member_id").val(json.id);
+        $("#member_name").val(json.name);
+        $("#member_idCardNo").val(json.idCardNo);
+        $("#member_mobile").val(json.mobile);
+        $("#member_sex").val(json.sex);
+        $("#member_birthday").val(json.birthday);
+        $("#member_password").val("");
+      } else {
+        $("#member_id").val("");
+        $("#member_name").val("");
+        $("#member_idCardNo").val("");
+        $("#member_mobile").val("");
+        $("#member_sex").val("");
+        $("#member_birthday").val("");
+        $("#member_password").val("${_Constants.DEFAULT_MEMBER_PASSWORD}");
+      }
+      $('#saveModal').modal('show');
+    }
+</script>
 </head>
 
 <body>
@@ -26,7 +50,7 @@
                 <div id="userManageAlter"></div>
                 <div>
                   <div style="display:inline-block; margin-top:10px;margin-bottom:10px;">
-                    <a href="${req.contextPath}/manage/member/save"><i class="glyphicon glyphicon-plus"></i> 新增会员</a>
+                    <a href="javascript:showMemberDialog(null)"><i class="glyphicon glyphicon-plus"></i> 新增会员</a>
                     <a href="#" data-toggle="modal" data-target="#queryModal" style="padding-left: 30px;"><i class="glyphicon glyphicon-search"></i> 查找会员</a>
                   </div>
                 </div>
@@ -46,7 +70,7 @@
                     </thead>
                     <tbody>
                     <#list page.resultList as item>
-                    <tr>
+                    <tr id="member_${item.id}" json='${_ObjectMapper.writeValueAsString(item)}'>
                         <td>${item.name}</td>
                         <td><span class="label label-default">${item.idCardNo}</span></td>
                         <td>${item.mobile!'--'}</td>
@@ -67,8 +91,8 @@
                         <td>${item.lastTransTime!'--'}</td>
                         <td>
                           <div class="btn-group" role="group" aria-label="...">
-                            <button class="btn btn-primary">编辑属性</button>
-                            <button class="btn btn-success">交易记录</button>
+                            <button class="btn btn-primary btn-sm btn-round" onclick="showMemberDialog(${item.id})">修改会员</button>
+                            <button class="btn btn-success btn-sm btn-round">交易记录</button>
                           </div>
                         </td>
                     </tr>
@@ -96,23 +120,23 @@
         <form id="queryForm" action="${req.contextPath}/manage/member/list" class="form-horizontal" method="post">
           <input type="hidden" name="pageNo">
           <div class="form-group">
-            <label for="member_name" class="col-sm-4 control-label">姓名</label>
+            <label class="col-sm-4 control-label">姓名</label>
             <div class="col-sm-8">
-              <input type="text" name="name" value="${RequestParameters.name!}" class="form-control" id="member_name" placeholder="真实姓名" required>
+              <input type="text" name="name" value="${RequestParameters.name!}" class="form-control" placeholder="真实姓名" required>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-4 control-label">身份证号</label>
             <div class="col-sm-8">
               <p class="form-control-static">
-                <input type="text" name="idCardNo" value="${RequestParameters.idCardNo!}" class="form-control" id="member_password" placeholder="身份证号">
+                <input type="text" name="idCardNo" value="${RequestParameters.idCardNo!}" class="form-control" placeholder="身份证号">
               </p>
             </div>
           </div>
           <div class="form-group">
-            <label for="member_password" class="col-sm-4 control-label">手机号</label>
+            <label class="col-sm-4 control-label">手机号</label>
             <div class="col-sm-8">
-              <input type="text" name="mobile" value="${RequestParameters.mobile!}" class="form-control" id="member_password" placeholder="手机号">
+              <input type="text" name="mobile" value="${RequestParameters.mobile!}" class="form-control" placeholder="手机号">
             </div>
           </div>
         </form>
@@ -120,6 +144,69 @@
       <div class="modal-footer">
         <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
         <a href="javascript:$('#queryForm').submit();" class="btn btn-primary">保存</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h3>新增/修改会员</h3>
+      </div>
+      <div class="modal-body">
+        <form id="saveForm" action="${req.contextPath}/manage/member/save" class="form-horizontal" method="post">
+          <input type="hidden" name="id" id="member_id">
+          <div class="form-group">
+            <label for="member_name" class="col-sm-4 control-label">姓名</label>
+            <div class="col-sm-8">
+              <input type="text" name="name" class="form-control" id="member_name" placeholder="真实姓名" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_idCardNo" class="col-sm-4 control-label">身份证号</label>
+            <div class="col-sm-8">
+              <p class="form-control-static">
+                <input type="text" name="idCardNo" class="form-control" id="member_idCardNo" placeholder="身份证号">
+              </p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_mobile" class="col-sm-4 control-label">手机号</label>
+            <div class="col-sm-8">
+              <input type="text" name="mobile" class="form-control" id="member_mobile" placeholder="手机号">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_password" class="col-sm-4 control-label">密码</label>
+            <div class="col-sm-8">
+              <a data-toggle="tooltip" title="默认密码:${_Constants.DEFAULT_MEMBER_PASSWORD}" href="#">
+              <input type="password" name="password" class="form-control" id="member_password" placeholder="登陆密码，不修改请留空">
+              </a>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_sex" class="col-sm-4 control-label">性别</label>
+            <div class="col-sm-8">
+              <select name="sex" id="member_sex" class="form-control">
+                <option value="">--</option>
+                <option value="0">女</option>
+                <option value="1">男</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="member_birthday" class="col-sm-4 control-label">生日</label>
+            <div class="col-sm-8">
+              <input type="text" name="birthday" class="form-control datepicker" id="member_birthday" placeholder="生日">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
+        <a href="javascript:$('#saveForm').submit();" class="btn btn-primary">保存</a>
       </div>
     </div>
   </div>

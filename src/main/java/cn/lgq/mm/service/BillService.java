@@ -7,6 +7,7 @@ import cn.lgq.mm.model.Bill;
 import cn.lgq.mm.vo.Page;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Sets;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class BillService {
         page.setLimit(pageSize);
         List<Bill> billList = billMapper.findBills(masterId, memberId, createTimeStart, createTimeEnd, page.getOffset(), page.getLimit());
         List<Long> creatorIdList = Lists.transform(billList, (bill) -> bill.getCreatorId());
-        List<Admin> adminList = adminMapper.getAdminNames(creatorIdList.toArray(new Long[creatorIdList.size()]));
+        List<Admin> adminList = adminMapper.getAdminNames(Sets.newHashSet(creatorIdList).toArray(new Long[1]));
         Map<Long, Admin> adminMap = Maps.uniqueIndex(adminList, (admin) -> admin.getId());
         billList.forEach(bill -> bill.setCreatorName(adminMap.get(bill.getCreatorId()).getName()));
         int count = billMapper.countBills(masterId, masterId, createTimeStart, createTimeEnd);

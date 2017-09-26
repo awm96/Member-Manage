@@ -26,4 +26,6 @@ public interface AdminMapper {
     void addAdmin(Admin admin);
 
     void updateAdmin(Admin admin);
+
+    void deleteAdmin(Long adminId);
 }

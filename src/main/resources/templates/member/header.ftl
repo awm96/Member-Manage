@@ -67,7 +67,7 @@
           <div class="form-group">
             <label for="member_password" class="col-sm-4 control-label">密码</label>
             <div class="col-sm-8">
-              <input type="password" name="password" class="form-control" id="member_password" placeholder="登陆密码">
+              <input type="password" name="password" class="form-control" id="member_password" placeholder="登陆密码，不修改请留空">
             </div>
           </div>
           <div class="form-group">

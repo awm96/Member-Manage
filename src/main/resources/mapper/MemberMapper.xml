@@ -45,16 +45,16 @@
 
   <insert id="addMember" useGeneratedKeys="true" keyProperty="id">
     insert into member(<include refid="columns"/>) values (
-    default, #{name}, #{idCardNo}, #{mobile}, #{password}, #{sex}, #{birthday}, #{level},
-    #{storedAmount}, #{consumeAmount},
-    #{integralAmount}, #{lastTransTime}, now(), #{creatorId}, now(), #{updaterId}
+      default, #{name}, #{idCardNo}, #{mobile}, #{password}, #{sex}, #{birthday}, 0,
+      0, 0, 0, null, now(), #{creatorId}, now(), #{updaterId}
     )
   </insert>
 
   <update id="updateMember">
     update member set
-       name=#{name}, id_card_no=#{idCardNo}, mobile=#{mobile}, <if test="password != null">password=#{password},</if>
-       sex=#{sex}, birthday=#{birthday}, level=#{level}, update_time=now(), updater_id=#{updaterId}
+       name=#{name}, id_card_no=#{idCardNo}, mobile=#{mobile},
+       <if test="password != null and password != ''">password=#{password},</if>
+       sex=#{sex}, birthday=#{birthday}, update_time=now(), updater_id=#{updaterId}
     where id = #{id}
   </update>
 </mapper>

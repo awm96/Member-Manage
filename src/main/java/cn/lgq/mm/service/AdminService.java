@@ -49,4 +49,9 @@ public class AdminService {
     public void updateAdmin(Admin admin) {
         mapper.updateAdmin(admin);
     }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void deleteAdmin(Long adminId) {
+        mapper.deleteAdmin(adminId);
+    }
 }

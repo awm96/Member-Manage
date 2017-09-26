@@ -51,7 +51,7 @@ public class MemberManageController extends AbstractController {
         if (member.getId() == null) {
             member.setPassword(SHA1Util.encrypt(member.getPassword()));
             member.setCreatorId(admin.getId());
-            member.setUpdaterId(admin.getUpdaterId());
+            member.setUpdaterId(admin.getId());
             service.addMember(member);
         } else {
             if (StringUtils.isNotBlank(member.getPassword())) {

@@ -53,7 +53,12 @@
 
   <update id="updateAdmin">
     update admin set
-       name=#{name}, <if test="password != null">password=#{password},</if> type=#{type}, update_time=now(), updater_id=#{updaterId}
+       name=#{name}, <if test="password != null and password != ''">password=#{password},</if>
+       type=#{type}, update_time=now(), updater_id=#{updaterId}
     where id = #{id}
   </update>
+  
+  <delete id="deleteAdmin">
+    delete from admin where id = #{adminId}
+  </delete>
 </mapper>

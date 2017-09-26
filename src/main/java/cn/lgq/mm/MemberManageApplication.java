@@ -2,11 +2,13 @@ package cn.lgq.mm;
 
 import cn.lgq.mm.filter.AdminInterceptor;
 import cn.lgq.mm.filter.MemberInterceptor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModelException;
+import java.util.Map;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -15,13 +17,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
-
-import java.util.Map;
 
 /**
  * Spring Boot 程序启动入口
@@ -30,6 +31,7 @@ import java.util.Map;
 @EnableTransactionManagement
 @SpringBootApplication
 @EnableAsync
+@EnableScheduling
 public class MemberManageApplication extends WebMvcConfigurerAdapter {
 
     public static void main(String[] args) {
@@ -64,11 +66,13 @@ public class MemberManageApplication extends WebMvcConfigurerAdapter {
      */
     @Bean
     public FreeMarkerViewResolver getFreeMarkerViewResolver(
-            @Autowired FreeMarkerViewResolver viewResolver) {
-        Map<String, TemplateHashModel> staticClass = Maps.newHashMap();
-        staticClass.put("_ExceptionUtils", this.getTemplateHashModel(ExceptionUtils.class));
-        staticClass.put("_Constants", this.getTemplateHashModel(Constants.class));
-        viewResolver.setAttributesMap(staticClass);
+            @Autowired FreeMarkerViewResolver viewResolver,
+            @Autowired ObjectMapper objectMapper) {
+        Map<String, Object> classMap = Maps.newHashMap();
+        classMap.put("_ExceptionUtils", this.getTemplateHashModel(ExceptionUtils.class));
+        classMap.put("_Constants", this.getTemplateHashModel(Constants.class));
+        classMap.put("_ObjectMapper", objectMapper);
+        viewResolver.setAttributesMap(classMap);
         return viewResolver;
     }
 

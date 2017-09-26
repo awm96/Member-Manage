@@ -37,7 +37,7 @@
             <ul class="dropdown-menu">
                 <li><a href="#" data-toggle="modal" data-target="#adminModal">修改个人信息</a></li>
                 <li class="divider"></li>
-                <li><a href="${req.contextPath}/admin/logout">退出登陆</a></li>
+                <li><a href="${req.contextPath}/manage/logout">退出登陆</a></li>
             </ul>
         </div>
     </div>
@@ -52,21 +52,21 @@
             <div class="modal-body">
                 <form id="adminForm" action="${req.contextPath}/manage/update" class="form-horizontal" method="post">
                     <div class="form-group">
-                        <label for="admin_name" class="col-sm-4 control-label">姓名</label>
+                        <label for="h_admin_name" class="col-sm-4 control-label">姓名</label>
                         <div class="col-sm-8">
-                            <input type="text" name="name" value="${hAdmin.name}" class="form-control" id="admin_name" placeholder="管理员名称" required>
+                            <input type="text" name="name" value="${hAdmin.name}" class="form-control" id="h_admin_name" placeholder="管理员名称" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="admin_password" class="col-sm-4 control-label">密码</label>
+                        <label for="h_admin_password" class="col-sm-4 control-label">密码</label>
                         <div class="col-sm-8">
-                            <input type="password" name="password" class="form-control" id="admin_password" placeholder="登陆密码">
+                            <input type="password" name="password" class="form-control" id="h_admin_password" placeholder="登陆密码，不修改请留空">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="admin_type" class="col-sm-4 control-label">类型</label>
+                        <label for="h_admin_type" class="col-sm-4 control-label">类型</label>
                         <div class="col-sm-8">
-                            <select name="type" id="admin_type" class="form-control">
+                            <select name="type" id="h_admin_type" class="form-control">
                                 <option ${(hAdmin.type == 0)?string("selected","")} value="0">普通管理员</option>
                                 <option ${(hAdmin.type == 1)?string("selected","")} value="1">超级管理员</option>
                             </select>
