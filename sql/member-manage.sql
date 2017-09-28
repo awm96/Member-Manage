@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2017-09-22 19:23:40
+Date: 2017-09-28 21:57:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,7 +35,7 @@ CREATE TABLE `admin` (
 -- ----------------------------
 -- Records of admin
 -- ----------------------------
-INSERT INTO `admin` VALUES ('1', '李国庆', '3da541559918a808c2402bba5012f6c60b27661c', '1', '2017-09-20 11:45:27', '1', '2017-09-20 11:45:30', '1');
+INSERT INTO `admin` VALUES ('1', 'lgq', '3da541559918a808c2402bba5012f6c60b27661c', '1', '2017-09-20 11:45:27', '1', '2017-09-20 11:45:30', '1');
 
 -- ----------------------------
 -- Table structure for bill
@@ -47,20 +47,13 @@ CREATE TABLE `bill` (
   `member_id` bigint(20) NOT NULL,
   `trans_type` tinyint(4) NOT NULL COMMENT '0:储值, 1:储值充正, 2:消费, 3:消费充正, 4:积分, 5:积分充正',
   `amount` int(11) DEFAULT NULL,
+  `process_flag` tinyint(4) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT NULL,
   `creator_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_bill_member_id` (`member_id`),
   KEY `idx_bill_create_time` (`create_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of bill
--- ----------------------------
-INSERT INTO `bill` VALUES ('1', '1', '1', '1', '100', '2017-09-20 11:44:31', '1');
-INSERT INTO `bill` VALUES ('2', '1', '1', '2', '100', '2017-09-21 09:23:46', '1');
-INSERT INTO `bill` VALUES ('24', '24', '1', '3', '100', '2017-09-21 09:56:25', '1');
-INSERT INTO `bill` VALUES ('25', '24', '1', '5', '100', '2017-09-21 09:56:27', '1');
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for member
@@ -79,15 +72,12 @@ CREATE TABLE `member` (
   `consume_amount` int(11) DEFAULT NULL,
   `integral_amount` int(11) DEFAULT NULL,
   `last_trans_time` datetime DEFAULT NULL,
+  `referrer_id` bigint(20) DEFAULT NULL,
+  `recommend_num` int(11) DEFAULT NULL,
   `create_time` timestamp NULL DEFAULT NULL,
   `creator_id` bigint(20) DEFAULT NULL,
   `update_time` timestamp NULL DEFAULT NULL,
   `updater_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_member_id_card_no` (`id_card_no`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of member
--- ----------------------------
-INSERT INTO `member` VALUES ('1', 'lgq', '2222', '18601149097', '3da541559918a808c2402bba5012f6c60b27661c', '1', '1984-10-01', '1', '0', '0', '0', null, '2017-09-19 19:09:52', '1', '2017-09-19 19:09:58', '1');
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

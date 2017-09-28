@@ -141,7 +141,8 @@
           <table class="table table-striped table-bordered responsive">
             <thead>
             <tr>
-              <th><i class="glyphicon glyphicon-screenshot"></i> 主流水号</th>
+              <th><i class="glyphicon glyphicon-star-empty"></i> 流水ID</th>
+              <th><i class="glyphicon glyphicon-star"></i> 主流水ID</th>
               <th><i class="glyphicon glyphicon-tags"></i> 交易类型</th>
               <th><i class="glyphicon glyphicon-shopping-cart"></i> 金额</th>
               <th><i class="glyphicon glyphicon-calendar"></i> 交易时间</th>
@@ -151,6 +152,7 @@
             <tbody>
             <#list page.resultList as item>
             <tr>
+              <td>${item.id}</td>
               <td>${item.masterId}</td>
               <td>
                 <#if item.transType == 0>
@@ -172,7 +174,7 @@
               <td>${item.creatorName}</td>
             </tr>
             <#else>
-            <tr><td colspan="5">还没有任何记录...</td></tr>
+            <tr><td colspan="6">还没有任何记录...</td></tr>
             </#list>
             </tbody>
           </table>

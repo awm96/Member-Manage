@@ -8,7 +8,13 @@ import freemarker.ext.beans.BeansWrapper;
 import freemarker.ext.beans.BeansWrapperBuilder;
 import freemarker.template.TemplateHashModel;
 import freemarker.template.TemplateModelException;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +22,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.format.Formatter;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -38,14 +46,37 @@ public class MemberManageApplication extends WebMvcConfigurerAdapter {
         SpringApplication.run(MemberManageApplication.class, args);
     }
 
-    /**
+  /**
+   * 添加请求参数Timestamp类型转换器
+   */
+  @Override
+    public void addFormatters(FormatterRegistry registry) {
+      registry.addFormatter(new Formatter<Timestamp>(){
+        private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @Override
+        public String print(Timestamp object, Locale locale) {
+          return df.format(object);
+        }
+        @Override
+        public Timestamp parse(String text, Locale locale) throws ParseException {
+          if (StringUtils.isNotBlank(text)) {
+            return new Timestamp(df.parse(text).getTime());
+          }
+          return null;
+        }
+      });
+      super.addFormatters(registry);
+    }
+
+  /**
      * 添加自定义拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MemberInterceptor()).addPathPatterns("/member/**")
                 .excludePathPatterns("/member/login");
-        registry.addInterceptor(new AdminInterceptor()).addPathPatterns("/manage/**")
+        AdminInterceptor adminInterceptor = new AdminInterceptor(new String[] {"/manage/admin"});
+        registry.addInterceptor(adminInterceptor).addPathPatterns("/manage/**")
                 .excludePathPatterns("/manage/login");
     }
 

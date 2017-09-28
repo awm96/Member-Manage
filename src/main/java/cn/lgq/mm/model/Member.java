@@ -25,6 +25,8 @@ public class Member {
     private Integer integralAmount;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp lastTransTime;
+    private Long referrerId;
+    private Integer recommendNum;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp createTime;
     private Long creatorId;

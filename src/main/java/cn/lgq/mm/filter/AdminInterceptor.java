@@ -18,10 +18,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
     /**
      * 超级管理员权限访问路径
      */
-    private String[] superAdminPaths;
-
-    public AdminInterceptor() {
-    }
+    private final String[] superAdminPaths;
 
     public AdminInterceptor(String[] superAdminPaths) {
         this.superAdminPaths = superAdminPaths;
@@ -41,8 +38,8 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
         if (ArrayUtils.isNotEmpty(superAdminPaths)) {
             String requestUri = request.getRequestURI().replaceFirst(request.getContextPath(), "");
             for (String path : superAdminPaths) {
-                if (requestUri.startsWith(path) && !Constants.ADMIN_SUPER.equals(user.getType())) {
-                    request.setAttribute(Constants.STATUS_CODE_REQUEST_KEY, HttpStatus.FORBIDDEN);
+                if (requestUri.startsWith(path) && !(Constants.ADMIN_SUPER == user.getType())) {
+                    request.setAttribute(Constants.STATUS_CODE_REQUEST_KEY, HttpStatus.FORBIDDEN.value());
                     request.setAttribute(Constants.ERROR_MSG_REQUEST_KEY, "您没有权限访问该地址");
                     request.getRequestDispatcher("/error").forward(request, response);
                     return false;

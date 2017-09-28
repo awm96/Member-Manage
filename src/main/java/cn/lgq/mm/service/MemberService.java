@@ -3,7 +3,6 @@ package cn.lgq.mm.service;
 import cn.lgq.mm.dao.MemberMapper;
 import cn.lgq.mm.model.Member;
 import cn.lgq.mm.vo.Page;
-import java.sql.Timestamp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -42,9 +41,18 @@ public class MemberService {
         return page;
     }
 
+    @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+    public List<Member> findAllMembers() {
+        return mapper.findMembers(null, null, null, null, null);
+    }
+
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public void addMember(Member member) {
         mapper.addMember(member);
+        //推荐人不为空则更新推荐人recommendNum属性+1
+        if (member.getReferrerId() != null) {
+            mapper.incrementMemberRecommendNum(member.getReferrerId());
+        }
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)

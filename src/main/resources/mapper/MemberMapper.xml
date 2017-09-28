@@ -5,7 +5,7 @@
 
   <sql id="columns">
       id, name, id_card_no, mobile, password, sex, birthday, level, stored_amount, consume_amount,
-      integral_amount, last_trans_time, create_time, creator_id, update_time, updater_id
+      integral_amount, last_trans_time, referrer_id, recommend_num, create_time, creator_id, update_time, updater_id
   </sql>
 
   <select id="getMember" resultType="Member">
@@ -14,10 +14,21 @@
     from member where id = #{id}
   </select>
 
+  <select id="getMemberForUpdate" resultType="Member">
+    select
+    <include refid="columns"/>
+    from member where id = #{id} for update
+  </select>
+
   <select id="getMemberByIdCardNo" resultType="Member">
     select
     <include refid="columns"/>
     from member where id_card_no = #{id}
+  </select>
+
+  <select id="getMemberBaseInfo" resultType="Member">
+    select id, name, id_card_no, mobile from member where id in
+    <foreach collection="array" item="id" open="(" close=")" separator=", ">#{id}</foreach>
   </select>
 
   <select id="findMembers" resultType="Member">
@@ -46,7 +57,7 @@
   <insert id="addMember" useGeneratedKeys="true" keyProperty="id">
     insert into member(<include refid="columns"/>) values (
       default, #{name}, #{idCardNo}, #{mobile}, #{password}, #{sex}, #{birthday}, 0,
-      0, 0, 0, null, now(), #{creatorId}, now(), #{updaterId}
+      0, 0, 0, null, #{referrerId}, 0, now(), #{creatorId}, now(), #{updaterId}
     )
   </insert>
 
@@ -56,5 +67,18 @@
        <if test="password != null and password != ''">password=#{password},</if>
        sex=#{sex}, birthday=#{birthday}, update_time=now(), updater_id=#{updaterId}
     where id = #{id}
+  </update>
+
+  <update id="incrementMemberRecommendNum">
+    update member set recommend_num = recommend_num + 1 where id = #{memberId}
+  </update>
+
+  <update id="updateMemberAmountAndLevel">
+    update member set
+      stored_amount = stored_amount + #{storedAmount},
+      consume_amount = consume_amount + #{consumeAmount},
+      integral_amount = integral_amount + #{integralAmount},
+      last_trans_time = now(), level = #{level}
+    where id = #{memberId}
   </update>
 </mapper>

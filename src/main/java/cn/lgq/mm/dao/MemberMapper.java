@@ -14,7 +14,11 @@ public interface MemberMapper {
 
     Member getMember(Long id);
 
+    Member getMemberForUpdate(Long id);
+
     Member getMemberByIdCardNo(String idCardNo);
+
+    List<Member> getMemberBaseInfo(Long... id);
 
     List<Member> findMembers(@Param("name") String name, @Param("mobile") String mobile, @Param("idCardNo") String idCardNo,
                              @Param("offset") Integer offset, @Param("limit") Integer limit);
@@ -24,4 +28,10 @@ public interface MemberMapper {
     void addMember(Member member);
 
     void updateMember(Member member);
+
+    void incrementMemberRecommendNum(Long memberId);
+
+    void updateMemberAmountAndLevel(@Param("memberId") long memberId, @Param("level") int level,
+        @Param("storedAmount") int storedAmount, @Param("consumeAmount") int consumeAmount, @
+        Param("integralAmount") int integralAmount);
 }

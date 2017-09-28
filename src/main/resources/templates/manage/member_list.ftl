@@ -2,6 +2,8 @@
 <html lang="cn">
 <head>
 <#include "/common.ftl">
+<#include "/manage/member_list_chosen.ftl"/>
+<@memberListChosen selectEleId="refererId" memberList=memberList defaultNoSelect=true/>
 <script type="text/javascript">
     function showMemberDialog(memberId) {
       if (memberId) {
@@ -14,6 +16,7 @@
         $("#member_sex").val(json.sex);
         $("#member_birthday").val(json.birthday);
         $("#member_password").val("");
+        $("#refererBar").hide();
       } else {
         $("#member_id").val("");
         $("#member_name").val("");
@@ -22,6 +25,7 @@
         $("#member_sex").val("");
         $("#member_birthday").val("");
         $("#member_password").val("${_Constants.DEFAULT_MEMBER_PASSWORD}");
+        $("#refererBar").show();
       }
       $('#saveModal').modal('show');
     }
@@ -92,7 +96,7 @@
                         <td>
                           <div class="btn-group" role="group" aria-label="...">
                             <button class="btn btn-primary btn-sm btn-round" onclick="showMemberDialog(${item.id})">修改会员</button>
-                            <button class="btn btn-success btn-sm btn-round">交易记录</button>
+                            <a class="btn btn-success btn-sm btn-round" href="${req.contextPath}/manage/bill/list?memberId=${item.id}">交易记录</a>
                           </div>
                         </td>
                     </tr>
@@ -200,6 +204,12 @@
             <label for="member_birthday" class="col-sm-4 control-label">生日</label>
             <div class="col-sm-8">
               <input type="text" name="birthday" class="form-control datepicker" id="member_birthday" placeholder="生日">
+            </div>
+          </div>
+          <div id="refererBar" class="form-group">
+            <label class="col-sm-4 control-label">推荐人</label>
+            <div class="col-sm-8">
+              <select id="refererId" name="refererId"></select>
             </div>
           </div>
         </form>

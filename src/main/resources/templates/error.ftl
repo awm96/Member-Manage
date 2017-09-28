@@ -12,12 +12,12 @@
 <p class="error-msg">${error}</p>
 <div class="clear"></div>
 <div class="content">
-${message}<br><br>
+${message!}<br><br>
 <#if Session[_Constants.ADMIN_SESSION_KEY]?? && Session[_Constants.ADMIN_SESSION_KEY].type == 1 && exception??>
   <div class="row">
     <div class="col-md-12">
       <h3>异常详细信息: ${exception}</h3>
-      <p>${trace}</p>
+      <code>${trace!}</code>
     </div>
   </div>
 </#if>

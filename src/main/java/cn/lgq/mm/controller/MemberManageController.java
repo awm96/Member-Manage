@@ -25,6 +25,7 @@ import javax.servlet.http.HttpSession;
 public class MemberManageController extends AbstractController {
 
     private final String listPage = "/manage/member_list";
+    private final String redirectListPage = "redirect:/manage/member/list";
 
     @Autowired
     private MemberService service;
@@ -38,6 +39,7 @@ public class MemberManageController extends AbstractController {
         ModelAndView mav = new ModelAndView(listPage);
         Page<Member> page = service.findMembers(name, mobile, idCardNo, pageNo, pageSize);
         mav.addObject(page);
+        mav.addObject("memberList", service.findAllMembers());
         return mav;
     }
 
@@ -47,7 +49,7 @@ public class MemberManageController extends AbstractController {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public ModelAndView save(Member member, HttpSession session) {
         Admin admin = (Admin) session.getAttribute(Constants.ADMIN_SESSION_KEY);
-        ModelAndView mav = new ModelAndView("redirect:/manage/member/list");
+        ModelAndView mav = new ModelAndView(redirectListPage);
         if (member.getId() == null) {
             member.setPassword(SHA1Util.encrypt(member.getPassword()));
             member.setCreatorId(admin.getId());

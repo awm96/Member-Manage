@@ -4,7 +4,7 @@
 <mapper namespace="cn.lgq.mm.dao.BillMapper">
 
   <sql id="columns">
-        id, master_id, member_id, trans_type, amount, create_time, creator_id
+        id, master_id, member_id, trans_type, amount, process_flag, create_time, creator_id
     </sql>
 
   <select id="getBill" resultType="Bill">
@@ -19,9 +19,10 @@
     from bill
     <where>
       <if test="masterId != null">master_id = #{masterId}</if>
-      <if test="memberId != null">member_id = #{memberId}</if>
-      <if test="createTimeStart != null">createTimeStart >= #{createTimeStart}</if>
-      <if test="createTimeEnd != null">createTimeEnd &lt;= #{createTimeEnd}</if>
+      <if test="memberId != null">and member_id = #{memberId}</if>
+      <if test="transType != null">and trans_type = #{transType}</if>
+      <if test="createTimeStart != null">and create_time >= #{createTimeStart}</if>
+      <if test="createTimeEnd != null">and create_time &lt;= #{createTimeEnd}</if>
     </where>
     <if test="offset != null and limit != null">
       order by id desc limit #{offset}, #{limit}
@@ -32,9 +33,10 @@
     select count(*) from bill
     <where>
       <if test="masterId != null">master_id = #{masterId}</if>
-      <if test="memberId != null">member_id = #{memberId}</if>
-      <if test="createTimeStart != null">createTimeStart >= #{createTimeStart}</if>
-      <if test="createTimeEnd != null">createTimeEnd &lt;= #{createTimeEnd}</if>
+      <if test="memberId != null">and member_id = #{memberId}</if>
+      <if test="transType != null">and trans_type = #{transType}</if>
+      <if test="createTimeStart != null">and create_time >= #{createTimeStart}</if>
+      <if test="createTimeEnd != null">and create_time &lt;= #{createTimeEnd}</if>
     </where>
   </select>
 
@@ -42,14 +44,13 @@
     insert into bill(<include refid="columns"/>) values (
     default,
     <choose>
-      <when test="masterId == null">0</when>
-      <otherwise>#{masterId}</otherwise>
+      <when test="masterId == null">0,</when>
+      <otherwise>#{masterId},</otherwise>
     </choose>
-    ,
-    #{memberId}, #{transType}, #{amount}, now(), #{creatorId}
+    #{memberId}, #{transType}, #{amount}, #{processFlag}, now(), #{creatorId}
     );
     <if test="masterId == null">
-      update bill set master_id=@@IDENTITY where id=@@IDENTITY;
+      update bill set master_id = LAST_INSERT_ID() where id = LAST_INSERT_ID();
     </if>
   </insert>
 

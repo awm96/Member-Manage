@@ -56,7 +56,7 @@
 <script src='${req.contextPath}/charisma/js/jquery.dataTables.min.js'></script>
 
 <!-- select or dropdown enhancer -->
-<script src="${req.contextPath}/charisma/bower_components/chosen/chosen.jquery.min.js"></script>
+<script src="${req.contextPath}/charisma/bower_components/chosen/chosen.jquery.js"></script>
 <!-- plugin for gallery image view -->
 <script src="${req.contextPath}/charisma/bower_components/colorbox/jquery.colorbox-min.js"></script>
 <!-- notification plugin -->

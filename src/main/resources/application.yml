@@ -15,7 +15,7 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/member-manage?useUnicode=true&amp;characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/member-manage?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: root
     hikari:
@@ -58,3 +58,11 @@ mapper:
   identity: mysql
   not-empty: false
 #  mappers: cn.lgq.mm.dao.TodoDao
+
+#system custom properties
+system.regulation:
+  storePresentRule:
+    100: 150
+    300: 600
+    1000: 2500
+  consumeReturnRatio: 1
