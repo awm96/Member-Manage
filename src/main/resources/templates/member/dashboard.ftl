@@ -89,26 +89,32 @@
               <div class="form-group">
                 <label class="col-sm-4 control-label">储值总额</label>
                 <div class="col-sm-8">
-                  <p class="form-control-static">¥${member.storedAmount}</p>
+                  <p class="form-control-static">
+                    <span class="label label-primary">¥${member.storedAmount}</span>
+                  </p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">消费余额</label>
                 <div class="col-sm-8">
-                  <p class="form-control-static">¥${member.consumeAmount}</p>
+                  <p class="form-control-static">
+                    <span class="label label-success">¥${member.consumeAmount}</span>
+                  </p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">积分余额</label>
                 <div class="col-sm-8">
-                  <p class="form-control-static">¥${member.integralAmount}</p>
+                  <p class="form-control-static">
+                    <span class="label label-danger">¥${member.integralAmount}</span>
+                  </p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-4 control-label">级别</label>
                 <div class="col-sm-8">
                   <p class="form-control-static">
-                  <#if member.level == 0>--<#elseif member.level == 1>
+                  <#if member.level == 0>普通会员<#elseif member.level == 1>
                     银牌会员<#elseif member.level == 2>金牌会员<#else>钻石会员</#if>
                   </p>
                 </div>

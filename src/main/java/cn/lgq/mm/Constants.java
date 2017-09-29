@@ -27,6 +27,7 @@ public class Constants {
 
     public static final int ADMIN_NORMAL = 0;
     public static final int ADMIN_SUPER = 1;
+    public static final int ADMIN_SYSTEM = 2;
 
     public static final int MEMBER_LEVEL_NONE = 0;
     public static final int MEMBER_LEVEL_1 = 1;

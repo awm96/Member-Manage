@@ -96,7 +96,7 @@
             <label class="col-sm-4 control-label">级别</label>
             <div class="col-sm-8">
               <p class="form-control-static">
-              <#if member.level == 0>--<#elseif member.level == 1>
+              <#if member.level == 0>普通会员<#elseif member.level == 1>
                 银牌会员<#elseif member.level == 2>金牌会员<#else>钻石会员</#if>
               </p>
             </div>

@@ -1,4 +1,4 @@
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>大众天成会员管理系统</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="Member Management System">

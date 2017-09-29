@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -74,6 +75,16 @@ public class BillManageController extends AbstractController {
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String save(@RequestParam Long memberId, @RequestParam Integer transType,
         @RequestParam Integer amount, HttpSession session, Model model) {
+        if (transType != Constants.TRANS_TYPE_STORED_RECHARGE &&
+            transType != Constants.TRANS_TYPE_CONSUME_PAY &&
+            transType != Constants.TRANS_TYPE_INTEGRAL_PAY) {
+            model.addAttribute(Constants.ERROR_MSG_REQUEST_KEY, "错误的交易类型!");
+            return redirectListPage;
+        }
+        if (amount <= 0) {
+            model.addAttribute(Constants.ERROR_MSG_REQUEST_KEY, "交易金额不能小于等于0!");
+            return redirectListPage;
+        }
         Admin admin = (Admin) session.getAttribute(Constants.ADMIN_SESSION_KEY);
         try {
             billService.addBill(memberId, transType, amount, admin.getCreatorId());
@@ -92,5 +103,19 @@ public class BillManageController extends AbstractController {
     public String repeal(@RequestParam Long masterId, HttpSession session) {
         Admin admin = (Admin) session.getAttribute(Constants.ADMIN_SESSION_KEY);
         return redirectListPage;
+    }
+
+    /**
+     * 手动执行积分赠送定时任务
+     */
+    @RequestMapping(value = "/execIntegralPresent", method = RequestMethod.GET)
+    @ResponseBody
+    public String execIntegralPresent(@RequestParam Timestamp start, @RequestParam Timestamp end) {
+        try {
+            billService.execIntegralPresent(start, end);
+        } catch (Exception e) {
+            return "执行失败！ExceptionMsg=" + e.getMessage();
+        }
+        return "执行成功!";
     }
 }

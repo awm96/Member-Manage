@@ -75,7 +75,7 @@
                         <td>
                           <div class="btn-group" role="group" aria-label="...">
                             <button class="btn btn-primary btn-sm btn-round" onclick="showAdminDialog(${item.id})">修改</button>
-                            <button class="btn btn-success btn-sm btn-round" onclick="deleteAdmin(${item.id})">删除</button>
+                            <button class="btn btn-danger btn-sm btn-round" onclick="deleteAdmin(${item.id})">删除</button>
                           </div>
                         </td>
                     </tr>

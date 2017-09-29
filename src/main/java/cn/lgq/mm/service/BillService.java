@@ -75,10 +75,11 @@ public class BillService {
         Member member = memberMapper.getMemberForUpdate(memberId);
         Integer storedAmount = null, consumeAmount = null, integralAmount = null, level = null;
         if (transType == Constants.TRANS_TYPE_STORED_RECHARGE) {
-            Integer presentAmount = regulation.getStorePresentRule().floorKey(amount);
+            Map.Entry<Integer, Integer> present = regulation.getStorePresentRule().floorEntry(amount);
             storedAmount = amount;
-            consumeAmount = presentAmount == null ? amount : presentAmount;
-            level = Constants.MEMBER_LEVEL_THRESHOLD_MAP.floorKey(member.getStoredAmount() + amount);
+            consumeAmount = present == null ? amount : present.getValue();
+            Map.Entry<Integer, Integer> upgradeLevel = Constants.MEMBER_LEVEL_THRESHOLD_MAP.floorEntry(member.getStoredAmount() + amount);
+            level = upgradeLevel == null ? null : upgradeLevel.getValue();
             Bill master = new Bill(memberId, Constants.TRANS_TYPE_STORED_RECHARGE, storedAmount, creatorId);
             billMapper.addBill(master);
             Bill child = new Bill(memberId, Constants.TRANS_TYPE_CONSUME_RECHARGE, consumeAmount, creatorId);
@@ -107,7 +108,7 @@ public class BillService {
                 throw new BillException("会员积分余额小于请求的积分金额!");
             }
             integralAmount = amount;
-            Bill master = new Bill(memberId, Constants.TRANS_TYPE_CONSUME_PAY, integralAmount, creatorId);
+            Bill master = new Bill(memberId, Constants.TRANS_TYPE_INTEGRAL_PAY, integralAmount, creatorId);
             billMapper.addBill(master);
             integralAmount = integralAmount * -1;
         } else {

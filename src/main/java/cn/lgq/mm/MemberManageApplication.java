@@ -107,6 +107,7 @@ public class MemberManageApplication extends WebMvcConfigurerAdapter {
         classMap.put("_Constants", this.getTemplateHashModel(Constants.class));
         classMap.put("_ObjectMapper", objectMapper);
         viewResolver.setAttributesMap(classMap);
+        viewResolver.setContentType("text/html; charset=utf-8");
         return viewResolver;
     }
 
