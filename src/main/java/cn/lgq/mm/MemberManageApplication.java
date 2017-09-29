@@ -24,7 +24,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.format.Formatter;
 import org.springframework.format.FormatterRegistry;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -38,7 +37,6 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 @Configuration
 @EnableTransactionManagement
 @SpringBootApplication
-@EnableAsync
 @EnableScheduling
 public class MemberManageApplication extends WebMvcConfigurerAdapter {
 
@@ -52,7 +50,8 @@ public class MemberManageApplication extends WebMvcConfigurerAdapter {
   @Override
     public void addFormatters(FormatterRegistry registry) {
       registry.addFormatter(new Formatter<Timestamp>(){
-        private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        private final DateFormat dtf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         @Override
         public String print(Timestamp object, Locale locale) {
           return df.format(object);
@@ -60,7 +59,11 @@ public class MemberManageApplication extends WebMvcConfigurerAdapter {
         @Override
         public Timestamp parse(String text, Locale locale) throws ParseException {
           if (StringUtils.isNotBlank(text)) {
-            return new Timestamp(df.parse(text).getTime());
+            try {
+              return new Timestamp(dtf.parse(text).getTime());
+            } catch (ParseException e) {
+              return new Timestamp(df.parse(text).getTime());
+            }
           }
           return null;
         }

@@ -1,10 +1,10 @@
 package cn.lgq.mm.dao;
 
 import cn.lgq.mm.model.Bill;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 import java.sql.Timestamp;
 import java.util.List;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 /**
  * Created by Ligq on 2017/9/15.
@@ -26,4 +26,10 @@ public interface BillMapper {
                    @Param("createTimeEnd") Timestamp createTimeEnd);
 
     void addBill(Bill bill);
+
+    List<Bill> findNeedProcessConsumeAmount(@Param("createTimeStart") Timestamp createTimeStart,
+                                            @Param("createTimeEnd") Timestamp createTimeEnd);
+
+    void updateConsumePayBillProcessFinish(@Param("createTimeStart") Timestamp createTimeStart,
+                                           @Param("createTimeEnd") Timestamp createTimeEnd);
 }

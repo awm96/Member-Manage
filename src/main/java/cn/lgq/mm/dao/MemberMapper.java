@@ -31,7 +31,7 @@ public interface MemberMapper {
 
     void incrementMemberRecommendNum(Long memberId);
 
-    void updateMemberAmountAndLevel(@Param("memberId") long memberId, @Param("level") int level,
-        @Param("storedAmount") int storedAmount, @Param("consumeAmount") int consumeAmount, @
-        Param("integralAmount") int integralAmount);
+    void updateMemberAmountAndLevel(@Param("memberId") Long memberId, @Param("level") Integer level,
+        @Param("storedAmount") Integer storedAmount, @Param("consumeAmount") Integer consumeAmount,
+        @Param("integralAmount") Integer integralAmount);
 }

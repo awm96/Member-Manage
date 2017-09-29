@@ -53,6 +53,10 @@ public class MemberLoginController extends AbstractController {
             return mav;
         } else {
             session.setAttribute(Constants.MEMBER_SESSION_KEY, member);
+            if (member.getReferrerId() != null) {
+                Member referrer = service.getMember(member.getReferrerId());
+                member.setReferrerName(referrer.getName());
+            }
             return new ModelAndView(memberDashboardPage);
         }
     }

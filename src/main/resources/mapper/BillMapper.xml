@@ -54,4 +54,21 @@
     </if>
   </insert>
 
+  <select id="findNeedProcessConsumeAmount" resultType="Bill">
+    select
+      member_id,
+      4 as trans_type,
+      sum(case when trans_type = 4 then amount when trans_type = 5 then amount * -1 end) as amount
+    from bill
+    where create_time >= #{createTimeStart} and create_time &lt; #{createTimeEnd}
+      and process_flag is null and trans_type in (4, 5)
+    group by member_id
+  </select>
+  
+  <update id="updateConsumePayBillProcessFinish">
+    update bill set process_flag = 1
+    where create_time >= #{createTimeStart} and create_time &lt; #{createTimeEnd}
+      and process_flag is null and trans_type in (4, 5)
+  </update>
+
 </mapper>

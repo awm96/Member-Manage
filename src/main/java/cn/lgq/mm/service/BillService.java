@@ -73,7 +73,7 @@ public class BillService {
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public void addBill(long memberId, int transType, int amount, long creatorId) {
         Member member = memberMapper.getMemberForUpdate(memberId);
-        Integer storedAmount = 0, consumeAmount = 0, integralAmount = 0, level = null;
+        Integer storedAmount = null, consumeAmount = null, integralAmount = null, level = null;
         if (transType == Constants.TRANS_TYPE_STORED_RECHARGE) {
             Integer presentAmount = regulation.getStorePresentRule().floorKey(amount);
             storedAmount = amount;
@@ -109,14 +109,30 @@ public class BillService {
             integralAmount = amount;
             Bill master = new Bill(memberId, Constants.TRANS_TYPE_CONSUME_PAY, integralAmount, creatorId);
             billMapper.addBill(master);
+            integralAmount = integralAmount * -1;
         } else {
             throw new BillException("错误的交易类型! transType=" + transType);
         }
-        memberMapper.updateMemberAmountAndLevel(memberId, (level == null ? Constants.MEMBER_LEVEL_NONE : level),
-            storedAmount, consumeAmount, integralAmount);
+        memberMapper.updateMemberAmountAndLevel(memberId, level, storedAmount, consumeAmount, integralAmount);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
     public void repealBill(long masterId) {
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)
+    public void execIntegralPresent(Timestamp startTime, Timestamp endTime) {
+        List<Bill> billList = billMapper.findNeedProcessConsumeAmount(startTime, endTime);
+        for (Bill bill : billList) {
+            if (bill.getAmount() <= 0)
+                continue;
+            int integralAmount = Double.valueOf(Math.floor(bill.getAmount() * regulation.getConsumeReturnRatio())).intValue();
+            Bill child = new Bill(bill.getMemberId(), Constants.TRANS_TYPE_INTEGRAL_RECHARGE, integralAmount, 0L);
+            billMapper.addBill(child);
+            memberMapper.updateMemberAmountAndLevel(bill.getMemberId(), null,null, null, integralAmount);
+        }
+        if (!billList.isEmpty()) {
+            billMapper.updateConsumePayBillProcessFinish(startTime, endTime);
+        }
     }
 }

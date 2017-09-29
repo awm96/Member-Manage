@@ -75,10 +75,11 @@
 
   <update id="updateMemberAmountAndLevel">
     update member set
-      stored_amount = stored_amount + #{storedAmount},
-      consume_amount = consume_amount + #{consumeAmount},
-      integral_amount = integral_amount + #{integralAmount},
-      last_trans_time = now(), level = #{level}
+      <if test="storedAmount != null">stored_amount = stored_amount + #{storedAmount},</if>
+      <if test="consumeAmount != null">consume_amount = consume_amount + #{consumeAmount},</if>
+      <if test="integralAmount != null">integral_amount = integral_amount + #{integralAmount},</if>
+      <if test="level != null">level = #{level},</if>
+      last_trans_time = now()
     where id = #{memberId}
   </update>
 </mapper>

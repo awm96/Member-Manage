@@ -26,6 +26,7 @@ public class Member {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp lastTransTime;
     private Long referrerId;
+    private transient String referrerName;
     private Integer recommendNum;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Timestamp createTime;

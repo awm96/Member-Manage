@@ -6,6 +6,10 @@ import cn.lgq.mm.model.Member;
 import cn.lgq.mm.service.MemberService;
 import cn.lgq.mm.util.SHA1Util;
 import cn.lgq.mm.vo.Page;
+import com.google.common.collect.Maps;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by Ligq on 2017/9/15.
@@ -39,7 +42,13 @@ public class MemberManageController extends AbstractController {
         ModelAndView mav = new ModelAndView(listPage);
         Page<Member> page = service.findMembers(name, mobile, idCardNo, pageNo, pageSize);
         mav.addObject(page);
-        mav.addObject("memberList", service.findAllMembers());
+        List<Member> allMemberList = service.findAllMembers();
+        mav.addObject("memberList", allMemberList);
+        Map<Long, Member> allMemberMap = Maps.uniqueIndex(allMemberList, (member) -> member.getId());
+        page.getResultList().forEach(member -> {
+            if (member.getReferrerId() != null)
+                member.setReferrerName(allMemberMap.get(member.getReferrerId()).getName());
+        });
         return mav;
     }
 

@@ -38,12 +38,12 @@ public class MemberDashboardController extends AbstractController {
      */
     @RequestMapping(value = "/dashboard", method = RequestMethod.GET)
     public ModelAndView forwardToMember(@RequestParam(name = "pageNo", defaultValue = "1") int pageNo,
-        @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, HttpSession session, Model model) {
+        @RequestParam(name = "pageSize", defaultValue = "10") int pageSize, HttpSession session) {
         Member member = (Member) session.getAttribute(Constants.MEMBER_SESSION_KEY);
-        model.addAttribute("member", member);
         Page<Bill> page = billService.findBills(null, member.getId(), null, null, null, pageNo, pageSize);
         ModelAndView mav = new ModelAndView(memberMainPage);
         mav.addObject("page", page);
+        mav.addObject("member", member);
         return mav;
     }
 

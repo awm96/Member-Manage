@@ -60,9 +60,12 @@ mapper:
 #  mappers: cn.lgq.mm.dao.TodoDao
 
 #system custom properties
-system.regulation:
-  storePresentRule:
-    100: 150
-    300: 600
-    1000: 2500
-  consumeReturnRatio: 1
+system:
+  regulation:
+    storePresentRule:
+      100: 150
+      300: 600
+      1000: 2500
+    consumeReturnRatio: 1
+  tasks:
+    integralPresentTaskCron: 15 15 0 1 * *

@@ -68,8 +68,9 @@
                         <th><i class="glyphicon glyphicon-plus-sign"></i> 储值总额</th>
                         <th><i class="glyphicon glyphicon-minus-sign"></i> 消费余额</th>
                         <th><i class="glyphicon glyphicon-exclamation-sign"></i> 积分余额</th>
+                        <th><i class="glyphicon glyphicon-magnet"></i> 推荐人</th>
                         <th><i class="glyphicon glyphicon-calendar"></i> 最后交易时间</th>
-                      <th><i class="glyphicon glyphicon-hand-right"></i> 操作</th>
+                        <th><i class="glyphicon glyphicon-hand-right"></i> 操作</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,6 +93,7 @@
                         <td>¥${item.storedAmount}</td>
                         <td>¥${item.consumeAmount}</td>
                         <td>¥${item.integralAmount}</td>
+                        <td>${item.referrerName!'--'}</td>
                         <td>${item.lastTransTime!'--'}</td>
                         <td>
                           <div class="btn-group" role="group" aria-label="...">
@@ -101,7 +103,7 @@
                         </td>
                     </tr>
                     <#else>
-                    <tr><td colspan="9">还没有任何记录...</td></tr>
+                    <tr><td colspan="10">还没有任何记录...</td></tr>
                     </#list>
                     </tbody>
                 </table>
@@ -209,7 +211,7 @@
           <div id="refererBar" class="form-group">
             <label class="col-sm-4 control-label">推荐人</label>
             <div class="col-sm-8">
-              <select id="refererId" name="refererId"></select>
+              <select id="refererId" name="referrerId"></select>
             </div>
           </div>
         </form>

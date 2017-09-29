@@ -56,12 +56,15 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-4 control-label">级别</label>
+                <label class="col-sm-4 control-label">推荐人</label>
                 <div class="col-sm-8">
-                  <p class="form-control-static">
-                  <#if member.level == 0>--<#elseif member.level == 1>
-                    银牌会员<#elseif member.level == 2>金牌会员<#else>钻石会员</#if>
-                  </p>
+                  <p class="form-control-static">${member.referrerName!'--'}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">推荐会员人数</label>
+                <div class="col-sm-8">
+                  <p class="form-control-static">${member.recommendNum}</p>
                 </div>
               </div>
             </form>
@@ -99,6 +102,15 @@
                 <label class="col-sm-4 control-label">积分余额</label>
                 <div class="col-sm-8">
                   <p class="form-control-static">¥${member.integralAmount}</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-4 control-label">级别</label>
+                <div class="col-sm-8">
+                  <p class="form-control-static">
+                  <#if member.level == 0>--<#elseif member.level == 1>
+                    银牌会员<#elseif member.level == 2>金牌会员<#else>钻石会员</#if>
+                  </p>
                 </div>
               </div>
               <div class="form-group">
@@ -156,17 +168,25 @@
               <td>${item.masterId}</td>
               <td>
                 <#if item.transType == 0>
-                  <span class="label label-primary">储值</span>
+                  <span class="label label-primary">储值充值</span>
                 <#elseif item.transType == 1>
-                  <span class="label label-primary">储值充正</span>
+                  <span class="label label-warning">储值充值冲正</span>
                 <#elseif item.transType == 2>
-                  <span class="label label-success">消费</span>
+                  <span class="label label-primary">消费充值</span>
                 <#elseif item.transType == 3>
-                  <span class="label label-success">消费充正</span>
+                  <span class="label label-warning">消费充值冲正</span>
                 <#elseif item.transType == 4>
-                  <span class="label label-danger">积分</span>
+                  <span class="label label-success">消费支出</span>
                 <#elseif item.transType == 5>
-                  <span class="label label-danger">积分充正</span>
+                  <span class="label label-info">消费支出冲正</span>
+                <#elseif item.transType == 6>
+                  <span class="label label-success">积分充值</span>
+                <#elseif item.transType == 7>
+                  <span class="label label-info">积分充值冲正</span>
+                <#elseif item.transType == 8>
+                  <span class="label label-danger">积分支出</span>
+                <#elseif item.transType == 9>
+                  <span class="label label-default">积分支出冲正</span>
                 </#if>
               </td>
               <td>¥${item.amount}</td>

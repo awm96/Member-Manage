@@ -53,17 +53,25 @@
                       <td><span class="label label-default">${item.memberIdCardNo}</span></td>
                       <td>
                         <#if item.transType == 0>
-                          <span class="label label-primary">储值</span>
+                          <span class="label label-primary">储值充值</span>
                         <#elseif item.transType == 1>
-                          <span class="label label-primary">储值充正</span>
+                          <span class="label label-warning">储值充值冲正</span>
                         <#elseif item.transType == 2>
-                          <span class="label label-success">消费</span>
+                          <span class="label label-primary">消费充值</span>
                         <#elseif item.transType == 3>
-                          <span class="label label-success">消费充正</span>
+                          <span class="label label-warning">消费充值冲正</span>
                         <#elseif item.transType == 4>
-                          <span class="label label-danger">积分</span>
+                          <span class="label label-success">消费支出</span>
                         <#elseif item.transType == 5>
-                          <span class="label label-danger">积分充正</span>
+                          <span class="label label-info">消费支出冲正</span>
+                        <#elseif item.transType == 6>
+                          <span class="label label-success">积分充值</span>
+                        <#elseif item.transType == 7>
+                          <span class="label label-info">积分充值冲正</span>
+                        <#elseif item.transType == 8>
+                          <span class="label label-danger">积分支出</span>
+                        <#elseif item.transType == 9>
+                          <span class="label label-default">积分支出冲正</span>
                         </#if>
                       </td>
                       <td>¥${item.amount}</td>
@@ -110,25 +118,29 @@
             <div class="col-sm-8">
               <select name="transType" class="form-control">
                 <option value="">--</option>
-                <option ${(RequestParameters.transType?? && RequestParameters.transType=="0")?string('selected','')} value="0">储值</option>
-                <option ${(RequestParameters.transType?? && RequestParameters.transType=="1")?string('selected','')} value="1">储值充正</option>
-                <option ${(RequestParameters.transType?? && RequestParameters.transType=="2")?string('selected','')} value="2">消费</option>
-                <option ${(RequestParameters.transType?? && RequestParameters.transType=="3")?string('selected','')} value="3">消费充正</option>
-                <option ${(RequestParameters.transType?? && RequestParameters.transType=="4")?string('selected','')} value="4">积分</option>
-                <option ${(RequestParameters.transType?? && RequestParameters.transType=="5")?string('selected','')} value="5">积分充正</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="0")?string('selected','')} value="0">储值充值</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="1")?string('selected','')} value="1">储值充值冲正</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="2")?string('selected','')} value="2">消费充值</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="3")?string('selected','')} value="3">消费充值冲正</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="4")?string('selected','')} value="4">消费支出</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="5")?string('selected','')} value="5">消费支出冲正</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="6")?string('selected','')} value="6">积分充值</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="7")?string('selected','')} value="7">积分充值冲正</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="8")?string('selected','')} value="8">积分支出</option>
+                <option ${(RequestParameters.transType?? && RequestParameters.transType=="9")?string('selected','')} value="9">积分支出冲正</option>
               </select>
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-4 control-label">交易时间起始</label>
             <div class="col-sm-8">
-              <input type="text" name="createTimeStart" value="${RequestParameters.createTimeStart!}" class="form-control datetimepicker" placeholder="年-月-日格式">
+              <input type="text" name="createTimeStart" value="${RequestParameters.createTimeStart!}" class="form-control datepicker" placeholder="年-月-日格式">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-4 control-label">交易时间终止</label>
             <div class="col-sm-8">
-              <input type="text" name="createTimeStart" value="${RequestParameters.createTimeEnd!}" class="form-control datetimepicker" placeholder="年-月-日格式">
+              <input type="text" name="createTimeEnd" value="${RequestParameters.createTimeEnd!}" class="form-control datepicker" placeholder="年-月-日格式">
             </div>
           </div>
         </form>

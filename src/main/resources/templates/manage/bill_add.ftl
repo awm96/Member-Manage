@@ -56,9 +56,9 @@
                   <div class="form-group">
                     <label for="transType">交易类型</label>
                     <select id="transType" name="transType" class="form-control">
-                      <option value="0">储值</option>
-                      <option value="2">消费</option>
-                      <option value="4">积分</option>
+                      <option value="0">储值充值</option>
+                      <option value="4">消费支出</option>
+                      <option value="8">积分支出</option>
                     </select>
                   </div>
                   <div class="form-group">
