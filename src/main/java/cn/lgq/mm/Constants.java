@@ -34,7 +34,7 @@ public class Constants {
     public static final int MEMBER_LEVEL_2 = 2;
     public static final int MEMBER_LEVEL_3 = 3;
     public static final int MEMBER_LEVEL_1_THRESHOLD = 100;
-    public static final int MEMBER_LEVEL_2_THRESHOLD = 300;
+    public static final int MEMBER_LEVEL_2_THRESHOLD = 200;
     public static final int MEMBER_LEVEL_3_THRESHOLD = 500;
     public static final TreeMap<Integer, Integer> MEMBER_LEVEL_THRESHOLD_MAP = new TreeMap(){{
         this.put(MEMBER_LEVEL_1_THRESHOLD, MEMBER_LEVEL_1);
