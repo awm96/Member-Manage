@@ -37,10 +37,10 @@ public class MemberManageController extends AbstractController {
      * 跳转至会员列表页面
      */
     @RequestMapping(value = "/list")
-    public ModelAndView list(String name, String mobile, String idCardNo, @RequestParam(defaultValue = "1") int pageNo,
-                       @RequestParam(defaultValue = "10") int pageSize) {
+    public ModelAndView list(String name, String mobile, String idCardNo, Long referrerId,
+                @RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
         ModelAndView mav = new ModelAndView(listPage);
-        Page<Member> page = service.findMembers(name, mobile, idCardNo, pageNo, pageSize);
+        Page<Member> page = service.findMembers(name, mobile, idCardNo, referrerId, pageNo, pageSize);
         mav.addObject(page);
         List<Member> allMemberList = service.findAllMembers();
         mav.addObject("memberList", allMemberList);

@@ -30,12 +30,12 @@ public class MemberService {
     }
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-    public Page<Member> findMembers(String name, String mobile, String idCardNo, int pageNo, int pageSize) {
+    public Page<Member> findMembers(String name, String mobile, String idCardNo, Long referrerId, int pageNo, int pageSize) {
         Page<Member> page = new Page<>();
         page.setPageNo(pageNo);
         page.setLimit(pageSize);
-        List<Member> list = mapper.findMembers(name, mobile, idCardNo, page.getOffset(), page.getLimit());
-        int count = mapper.countMembers(name, mobile, idCardNo);
+        List<Member> list = mapper.findMembers(name, mobile, idCardNo, referrerId, page.getOffset(), page.getLimit());
+        int count = mapper.countMembers(name, mobile, idCardNo, referrerId);
         page.setTotalRows(count);
         page.setResultList(list);
         return page;
@@ -43,7 +43,7 @@ public class MemberService {
 
     @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
     public List<Member> findAllMembers() {
-        return mapper.findMembers(null, null, null, null, null);
+        return mapper.findMembers(null, null, null, null,  null,null);
     }
 
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Throwable.class)

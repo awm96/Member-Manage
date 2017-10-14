@@ -147,7 +147,7 @@
       </div>
       <div class="modal-footer">
         <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
-        <a href="javascript:$('#queryForm').submit();" class="btn btn-primary">保存</a>
+        <a href="javascript:$('#queryForm').submit();" class="btn btn-primary">查询</a>
       </div>
     </div>
   </div>

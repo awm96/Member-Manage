@@ -4,9 +4,11 @@
   memberList: 会员列表
   defaultNoSelect: 是否默认不选中任何项
 -->
-<#macro memberListChosen selectEleId memberList defaultNoSelect=false defaultSelectMemberId="0">
+<#macro memberListChosen selectEleId memberList defaultNoSelect=false defaultSelectMemberId="0" multiInstance=false>
 <script type="text/javascript">
+    <#if !multiInstance>
     var memberList = JSON.parse("${_ObjectMapper.writeValueAsString(memberList)?json_string}");
+    </#if>
     $(function(){
         <#if defaultNoSelect>
         $("#${selectEleId}").attr("data-placeholder", "--");

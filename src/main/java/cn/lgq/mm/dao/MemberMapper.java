@@ -21,9 +21,10 @@ public interface MemberMapper {
     List<Member> getMemberBaseInfo(Long... id);
 
     List<Member> findMembers(@Param("name") String name, @Param("mobile") String mobile, @Param("idCardNo") String idCardNo,
-                             @Param("offset") Integer offset, @Param("limit") Integer limit);
+                             @Param("referrerId") Long referrerId, @Param("offset") Integer offset, @Param("limit") Integer limit);
 
-    int countMembers(@Param("name") String name, @Param("mobile") String mobile, @Param("idCardNo") String idCardNo);
+    int countMembers(@Param("name") String name, @Param("mobile") String mobile, @Param("idCardNo") String idCardNo,
+                     @Param("referrerId") Long referrerId);
 
     void addMember(Member member);
 

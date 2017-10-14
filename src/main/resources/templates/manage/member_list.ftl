@@ -4,6 +4,7 @@
 <#include "/common.ftl">
 <#include "/manage/member_list_chosen.ftl"/>
 <@memberListChosen selectEleId="refererId" memberList=memberList defaultNoSelect=true/>
+<@memberListChosen selectEleId="q_refererId" memberList=memberList defaultNoSelect=true defaultSelectMemberId=RequestParameters.referrerId multiInstance=true/>
 <script type="text/javascript">
     function showMemberDialog(memberId) {
       if (memberId) {
@@ -69,7 +70,7 @@
                         <th><i class="glyphicon glyphicon-minus-sign"></i> 消费余额</th>
                         <th><i class="glyphicon glyphicon-exclamation-sign"></i> 积分余额</th>
                         <th><i class="glyphicon glyphicon-magnet"></i> 推荐人</th>
-                        <th><i class="glyphicon glyphicon-calendar"></i> 最后交易时间</th>
+                        <th><i class="glyphicon glyphicon-calendar"></i> 推荐人数</th>
                         <th><i class="glyphicon glyphicon-hand-right"></i> 操作</th>
                     </tr>
                     </thead>
@@ -94,7 +95,7 @@
                         <td>¥${item.consumeAmount}</td>
                         <td>¥${item.integralAmount}</td>
                         <td>${item.referrerName!'--'}</td>
-                        <td>${item.lastTransTime!'--'}</td>
+                        <td>${item.recommendNum!}</td>
                         <td>
                           <div class="btn-group" role="group" aria-label="...">
                             <button class="btn btn-primary btn-sm btn-round" onclick="showMemberDialog(${item.id})">修改会员</button>
@@ -145,11 +146,17 @@
               <input type="text" name="mobile" value="${RequestParameters.mobile!}" class="form-control" placeholder="手机号">
             </div>
           </div>
+            <div id="refererBar" class="form-group">
+                <label class="col-sm-4 control-label">推荐人</label>
+                <div class="col-sm-8">
+                    <select id="q_refererId" name="referrerId"></select>
+                </div>
+            </div>
         </form>
       </div>
       <div class="modal-footer">
         <a href="#" class="btn btn-default" data-dismiss="modal">关闭</a>
-        <a href="javascript:$('#queryForm').submit();" class="btn btn-primary">保存</a>
+        <a href="javascript:$('#queryForm').submit();" class="btn btn-primary">查询</a>
       </div>
     </div>
   </div>

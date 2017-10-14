@@ -39,6 +39,7 @@
       <if test="name != null and name != ''">name like '%${name}%'</if>
       <if test="mobile != null and mobile != ''">and mobile like '%${mobile}%'</if>
       <if test="idCardNo != null and idCardNo != ''">and id_card_no like '%${idCardNo}%'</if>
+      <if test="referrerId != null">and referrer_id = #{referrerId}</if>
     </where>
     <if test="offset != null and limit != null">
       order by id desc limit #{offset}, #{limit}
@@ -51,6 +52,7 @@
       <if test="name != null and name != ''">name like '%${name}%'</if>
       <if test="mobile != null and mobile != ''">and mobile like '%${mobile}%'</if>
       <if test="idCardNo != null and idCardNo != ''">and id_card_no like '%${idCardNo}%'</if>
+      <if test="referrerId != null">and referrer_id = #{referrerId}</if>
     </where>
   </select>
 
